@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Digital Product Passport — Organic Cotton T-Shirt | FutureWear</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1F2A24;
+    --linen:#F5F1E8;
+    --linen-deep:#EAE3D3;
+    --azulejo:#1D5C7A;
+    --azulejo-soft:#DCE8EC;
+    --thread-green:#4C7C59;
+    --clay-red:#A6503B;
+    --stone:#6B6459;
+    --white:#FFFEFC;
+    --line: rgba(31,42,36,0.14);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--linen-deep);
+    font-family:'Inter', sans-serif;
+    color:var(--ink);
+    -webkit-font-smoothing:antialiased;
+    display:flex;
+    justify-content:center;
+  }
+  ::selection{ background:var(--azulejo); color:var(--white); }
+
+  .device{
+    width:100%;
+    max-width:430px;
+    background:var(--linen);
+    min-height:100vh;
+    position:relative;
+    box-shadow:0 0 60px rgba(0,0,0,0.12);
+    overflow:hidden;
+  }
+
+  /* ---------- Azulejo tile motif (signature divider) ---------- */
+  .tile-rule{
+    height:10px;
+    width:100%;
+    background-image:
+      linear-gradient(45deg, var(--azulejo) 25%, transparent 25%, transparent 75%, var(--azulejo) 75%),
+      linear-gradient(45deg, var(--azulejo) 25%, transparent 25%, transparent 75%, var(--azulejo) 75%);
+    background-size:10px 10px;
+    background-position:0 0, 5px 5px;
+    opacity:0.85;
+  }
+
+  /* ---------- Header / passport bio-page ---------- */
+  header.bio{
+    background:var(--ink);
+    color:var(--linen);
+    padding:22px 22px 26px;
+    position:relative;
+  }
+  .bio-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+  }
+  .brand-mark{
+    font-family:'Fraunces', serif;
+    font-size:15px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    opacity:0.85;
+  }
+  .doc-type{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    background:rgba(245,241,232,0.12);
+    border:1px solid rgba(245,241,232,0.35);
+    padding:4px 8px;
+    border-radius:3px;
+    color:var(--linen);
+  }
+  h1.product-name{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:28px;
+    line-height:1.15;
+    margin:20px 0 4px;
+    letter-spacing:-0.01em;
+  }
+  .product-sub{
+    font-size:13.5px;
+    color:rgba(245,241,232,0.72);
+    margin-bottom:18px;
+  }
+  .id-strip{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+    font-family:'IBM Plex Mono', monospace;
+    border-top:1px dashed rgba(245,241,232,0.3);
+    padding-top:14px;
+  }
+  .id-strip div .k{
+    font-size:9px;
+    text-transform:uppercase;
+    letter-spacing:0.09em;
+    color:rgba(245,241,232,0.55);
+    display:block;
+    margin-bottom:2px;
+    font-family:'Inter', sans-serif;
+  }
+  .id-strip div .v{
+    font-size:12.5px;
+    color:var(--linen);
+  }
+
+  /* ---------- One identity strip ---------- */
+  .thesis{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:14px 22px;
+    background:var(--azulejo-soft);
+    font-size:12px;
+    color:var(--azulejo);
+    font-weight:600;
+    letter-spacing:0.01em;
+  }
+  .thesis .dot{ opacity:0.5; font-weight:400; }
+
+  /* ---------- Sections ---------- */
+  main{ padding:6px 0 10px; }
+  section.card{
+    margin:18px 22px 0;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+  .card-head{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    padding:16px 18px 14px;
+    cursor:pointer;
+    user-select:none;
+  }
+  .card-head .icon{
+    width:30px;height:30px;
+    border-radius:7px;
+    background:var(--linen-deep);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    font-size:15px;
+  }
+  .card-head .titles{ flex:1; }
+  .eyebrow{
+    font-size:9.5px;
+    text-transform:uppercase;
+    letter-spacing:0.1em;
+    color:var(--stone);
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .card-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:16.5px;
+    margin:2px 0 0;
+    color:var(--ink);
+  }
+  .chev{
+    font-size:12px;
+    color:var(--stone);
+    transition:transform 0.25s ease;
+  }
+  section.card.open .chev{ transform:rotate(180deg); }
+  .card-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height 0.3s ease;
+  }
+  section.card.open .card-body{ max-height:900px; }
+  .card-body-inner{
+    padding:0 18px 18px;
+  }
+
+  .rows{ border-top:1px solid var(--line); }
+  .row{
+    display:flex;
+    justify-content:space-between;
+    gap:14px;
+    padding:10px 0;
+    border-bottom:1px solid var(--line);
+    font-size:13.5px;
+  }
+  .row:last-child{ border-bottom:none; }
+  .row .label{ color:var(--stone); }
+  .row .value{ text-align:right; font-weight:500; }
+  .row .value.mono{ font-family:'IBM Plex Mono', monospace; font-size:12.5px; }
+
+  /* material bar */
+  .material-bar{
+    display:flex;
+    height:10px;
+    border-radius:5px;
+    overflow:hidden;
+    margin:14px 0 12px;
+  }
+  .material-bar span{ display:block; height:100%; }
+  .legend{ display:flex; gap:16px; flex-wrap:wrap; font-size:12px; margin-bottom:4px;}
+  .legend .lg{ display:flex; align-items:center; gap:6px; color:var(--stone); }
+  .swatch{ width:9px;height:9px;border-radius:2px; }
+
+  /* certification stamp — signature element */
+  .stamp-wrap{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:6px 0 16px;
+  }
+  .stamp{
+    width:82px;height:82px;
+    border-radius:50%;
+    border:2px dashed var(--thread-green);
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+    transform:rotate(-8deg);
+    position:relative;
+  }
+  .stamp::after{
+    content:"";
+    position:absolute;
+    inset:6px;
+    border-radius:50%;
+    border:1px solid var(--thread-green);
+    opacity:0.5;
+  }
+  .stamp .stamp-text{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:8.5px;
+    text-align:center;
+    line-height:1.35;
+    color:var(--thread-green);
+    text-transform:uppercase;
+    letter-spacing:0.03em;
+  }
+  .cert-list{ display:flex; flex-direction:column; gap:8px; flex:1; }
+  .cert-pill{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-size:12.5px;
+    font-weight:500;
+  }
+  .cert-pill .tick{
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--thread-green);
+    color:white;
+    font-size:10px;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+
+  .impact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:4px;
+  }
+  .impact-tile{
+    background:var(--linen);
+    border-radius:8px;
+    padding:14px;
+  }
+  .impact-tile .num{
+    font-family:'Fraunces', serif;
+    font-size:22px;
+    color:var(--azulejo);
+    display:block;
+    line-height:1.1;
+  }
+  .impact-tile .unit{ font-size:11px; color:var(--stone); }
+  .impact-tile .cap{ font-size:11px; color:var(--stone); margin-top:4px; }
+  .methodology-note{
+    font-size:11.5px;
+    color:var(--stone);
+    margin-top:12px;
+    padding-top:12px;
+    border-top:1px dashed var(--line);
+    line-height:1.5;
+  }
+
+  .care-list, .eol-list{
+    list-style:none;
+    margin:6px 0 0;
+    padding:0;
+  }
+  .care-list li, .eol-list li{
+    display:flex;
+    gap:10px;
+    font-size:13.5px;
+    padding:9px 0;
+    border-bottom:1px solid var(--line);
+    align-items:flex-start;
+  }
+  .care-list li:last-child, .eol-list li:last-child{ border-bottom:none; }
+  .care-list li .mark, .eol-list li .mark{
+    color:var(--azulejo);
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    margin-top:1px;
+  }
+
+  .badge-row{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-top:2px;
+  }
+  .badge{
+    font-size:11px;
+    font-family:'IBM Plex Mono', monospace;
+    padding:5px 9px;
+    border-radius:20px;
+    border:1px solid var(--line);
+    color:var(--stone);
+  }
+  .badge.verified{
+    background:var(--thread-green);
+    border-color:var(--thread-green);
+    color:white;
+  }
+
+  /* offline cache note */
+  .offline-note{
+    margin:20px 22px 0;
+    display:flex;
+    gap:10px;
+    align-items:flex-start;
+    background:var(--linen-deep);
+    border:1px dashed var(--stone);
+    border-radius:8px;
+    padding:12px 14px;
+    font-size:12px;
+    color:var(--stone);
+    line-height:1.5;
+  }
+  .offline-note .ic{ font-size:14px; margin-top:1px; }
+
+  footer{
+    margin:26px 22px 30px;
+    text-align:center;
+  }
+  .footer-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10px;
+    color:var(--stone);
+    letter-spacing:0.05em;
+    line-height:1.7;
+  }
+  .footer-line strong{ color:var(--ink); }
+
+  @media (max-width:380px){
+    h1.product-name{ font-size:24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="device">
+
+  <header class="bio">
+    <div class="bio-top">
+      <div class="brand-mark">FutureWear</div>
+      <div class="doc-type">Digital Product Passport</div>
+    </div>
+    <h1 class="product-name">Organic Cotton T-Shirt</h1>
+    <div class="product-sub">ESPR-ready transparency record · verified June 2026</div>
+    <div class="id-strip">
+      <div><span class="k">Product ID</span><span class="v">TSH-2026-001</span></div>
+      <div><span class="k">GTIN</span><span class="v">04012345678901</span></div>
+      <div><span class="k">Batch</span><span class="v">BATCH-PT-062026</span></div>
+      <div><span class="k">Origin</span><span class="v">Portugal</span></div>
+    </div>
+  </header>
+  <div class="tile-rule"></div>
+  <div class="thesis">One product <span class="dot">·</span> One digital identity <span class="dot">·</span> One QR code</div>
+
+  <main>
+
+    <!-- Product Overview -->
+    <section class="card open">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">🏷️</div>
+        <div class="titles">
+          <div class="eyebrow">Section 01</div>
+          <h2>Product Overview</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="rows">
+            <div class="row"><span class="label">Product name</span><span class="value">Organic Cotton T-Shirt</span></div>
+            <div class="row"><span class="label">Brand</span><span class="value">FutureWear</span></div>
+            <div class="row"><span class="label">SKU</span><span class="value mono">TSH-2026-001</span></div>
+            <div class="row"><span class="label">GTIN</span><span class="value mono">04012345678901</span></div>
+            <div class="row"><span class="label">Batch number</span><span class="value mono">BATCH-PT-062026</span></div>
+            <div class="row"><span class="label">Manufacturing date</span><span class="value">June 2026</span></div>
+            <div class="row"><span class="label">Country of origin</span><span class="value">Portugal</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Materials -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">🧵</div>
+        <div class="titles">
+          <div class="eyebrow">Section 02</div>
+          <h2>Materials</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="material-bar">
+            <span style="width:95%; background:var(--thread-green);"></span>
+            <span style="width:5%; background:var(--azulejo);"></span>
+          </div>
+          <div class="legend">
+            <div class="lg"><span class="swatch" style="background:var(--thread-green);"></span>Organic cotton — 95%</div>
+            <div class="lg"><span class="swatch" style="background:var(--azulejo);"></span>Elastane — 5%</div>
+          </div>
+          <div class="rows" style="margin-top:6px;">
+            <div class="row"><span class="label">Recycled content</span><span class="value">0%</span></div>
+            <div class="row"><span class="label">Product weight</span><span class="value">180 g</span></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="eyebrow" style="margin-bottom:8px;">Certified to</div>
+            <div class="badge-row">
+              <span class="badge verified">GOTS Certified</span>
+              <span class="badge verified">OEKO-TEX Std 100</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Origin & Supply Chain -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">🗺️</div>
+        <div class="titles">
+          <div class="eyebrow">Section 03</div>
+          <h2>Origin &amp; Supply Chain</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="rows">
+            <div class="row"><span class="label">Manufacturer</span><span class="value">Certified Textile Partner Portugal</span></div>
+            <div class="row"><span class="label">Factory location</span><span class="value">Porto, Portugal</span></div>
+            <div class="row"><span class="label">Supplier tier</span><span class="value">Tier 1 Manufacturing</span></div>
+            <div class="row"><span class="label">Raw material origin</span><span class="value">Turkey</span></div>
+            <div class="row"><span class="label">Production date</span><span class="value">June 2026</span></div>
+          </div>
+          <div style="margin-top:14px;">
+            <div class="eyebrow" style="margin-bottom:8px;">Social compliance</div>
+            <div class="badge-row">
+              <span class="badge verified">SA8000 Labour Cert.</span>
+              <span class="badge verified">Audit: Verified</span>
+              <span class="badge verified">Ethical Sourcing: Confirmed</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Environmental Impact -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">🌱</div>
+        <div class="titles">
+          <div class="eyebrow">Section 04</div>
+          <h2>Environmental Impact</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="impact-grid">
+            <div class="impact-tile">
+              <span class="num">2.1<span class="unit"> kg</span></span>
+              <span class="unit">CO₂e per product</span>
+              <div class="cap">Carbon footprint</div>
+            </div>
+            <div class="impact-tile">
+              <span class="num">1,500<span class="unit"> L</span></span>
+              <span class="unit">litres per product</span>
+              <div class="cap">Water consumption</div>
+            </div>
+          </div>
+          <div class="rows" style="margin-top:12px;">
+            <div class="row"><span class="label">Recyclability score</span><span class="value">High</span></div>
+          </div>
+          <div class="methodology-note">
+            Impact figures calculated per Life Cycle Assessment methodology, ISO 14040/14044. Cradle-to-gate scope, verified June 2026.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">✅</div>
+        <div class="titles">
+          <div class="eyebrow">Section 05</div>
+          <h2>Certifications</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <div class="stamp-wrap">
+            <div class="stamp"><div class="stamp-text">ESPR<br>Ready<br>2026</div></div>
+            <div class="cert-list">
+              <div class="cert-pill"><span class="tick">✓</span> GOTS Certified</div>
+              <div class="cert-pill"><span class="tick">✓</span> OEKO-TEX Standard 100</div>
+              <div class="cert-pill"><span class="tick">✓</span> SA8000 Labour Certification</div>
+            </div>
+          </div>
+          <div class="rows">
+            <div class="row"><span class="label">Supplier audit status</span><span class="value">Verified</span></div>
+            <div class="row"><span class="label">Last data verification</span><span class="value">June 2026</span></div>
+            <div class="row"><span class="label">Data owner</span><span class="value">Sustainability Compliance Team</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Care Instructions -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">🫧</div>
+        <div class="titles">
+          <div class="eyebrow">Section 06</div>
+          <h2>Care Instructions</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <ul class="care-list">
+            <li><span class="mark">→</span> Wash at 30°C</li>
+            <li><span class="mark">→</span> Avoid tumble drying</li>
+            <li><span class="mark">→</span> Repair before replacement</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Recycling / End of Life -->
+    <section class="card">
+      <div class="card-head" onclick="toggle(this)">
+        <div class="icon">♻️</div>
+        <div class="titles">
+          <div class="eyebrow">Section 07</div>
+          <h2>Recycling &amp; End-of-Life</h2>
+        </div>
+        <div class="chev">▾</div>
+      </div>
+      <div class="card-body">
+        <div class="card-body-inner">
+          <ul class="eol-list">
+            <li><span class="mark">→</span> Reuse recommended before disposal</li>
+            <li><span class="mark">→</span> Textile recycling instructions provided at collection points</li>
+            <li><span class="mark">→</span> Return-to-recycle program available through FutureWear</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="offline-note">
+    <span class="ic">⬇</span>
+    <span>Essential product information can be cached for offline access.</span>
+  </div>
+
+  <footer>
+    <div class="tile-rule" style="margin-bottom:16px;"></div>
+    <div class="footer-line">
+      <strong>FutureWear</strong> · Digital Product Passport<br>
+      Regulation (EU) 2024/1781 — ESPR<br>
+      passport ref. TSH-2026-001 / BATCH-PT-062026
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  function toggle(headEl){
+    const card = headEl.parentElement;
+    const wasOpen = card.classList.contains('open');
+    document.querySelectorAll('section.card.open').forEach(c => { if(c!==card) c.classList.remove('open'); });
+    card.classList.toggle('open', !wasOpen);
+  }
+</script>
+
+</body>
+</html>
